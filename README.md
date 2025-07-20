@@ -16,9 +16,3 @@ _A GPT-4-powered resume-to-job analyzer — currently in development._
 - OpenAI GPT-4 API
 - PDF.js for resume parsing
 
-### 🚀 How to Run
-1. Load the extension in `chrome://extensions`
-2. Start the server:
-   ```bash
-   npm install
-   npm start
