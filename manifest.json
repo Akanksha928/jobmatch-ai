@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Resume Gap Highlighter",
+  "version": "1.0",
+  "description": "Highlights missing resume skills on LinkedIn job pages.",
+  "permissions": ["storage", "scripting", "activeTab"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://www.linkedin.com/jobs/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "libs/pdf.worker.js",
+        "libs/pdf.mjs"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
