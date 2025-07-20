@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Resume Uploader</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 16px;
+      width: 300px;
+    }
+    input {
+      margin-top: 10px;
+    }
+    #status {
+      margin-top: 10px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h3>Upload Your Resume</h3>
+  <input type="file" id="resume-input" accept=".pdf,.txt" />
+  <p id="status"></p>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
