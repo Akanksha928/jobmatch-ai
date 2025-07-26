@@ -71,6 +71,7 @@ function analyzeResumeWithJobDescription() {
 
       const result = await response.json();
       console.log("Groq Response:", result);
+      showGPTPanel(result);
     } catch (err) {
       console.error("❌ Failed to fetch from backend:", err);
     }
@@ -107,3 +108,39 @@ window.addEventListener("load", () => {
     });
   }, 1500);
 });
+
+function showGPTPanel(result) {
+  const { match_score, missing_skills, suggestions } = result;
+
+  const panel = document.createElement("div");
+  panel.id = "jobmatch-panel";
+  panel.style.position = "fixed";
+  panel.style.bottom = "20px";
+  panel.style.right = "20px";
+  panel.style.width = "320px";
+  panel.style.background = "#fff";
+  panel.style.padding = "16px";
+  panel.style.border = "1px solid #ddd";
+  panel.style.borderRadius = "12px";
+  panel.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)";
+  panel.style.fontFamily = "sans-serif";
+  panel.style.fontSize = "14px";
+  panel.style.lineHeight = "1.6";
+  panel.style.zIndex = "9999";
+
+  panel.innerHTML = `
+    <h3 style="margin-top: 0; font-size: 16px;">📊 JobMatch AI</h3>
+    <strong>Match Score:</strong> ${match_score}%<br>
+    <strong>Missing Skills:</strong><br>
+    <ul>${missing_skills.map(skill => `<li>${skill}</li>`).join("")}</ul>
+    <strong>Suggestion:</strong>
+    <p>${suggestions}</p>
+  `;
+
+  // Remove existing panel if it exists
+  const existing = document.getElementById("jobmatch-panel");
+  if (existing) existing.remove();
+
+  document.body.appendChild(panel);
+}
+
