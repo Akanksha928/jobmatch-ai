@@ -112,34 +112,50 @@ window.addEventListener("load", () => {
 function showGPTPanel(result) {
   const { match_score, missing_skills, suggestions } = result;
 
+  const old = document.getElementById("jobmatch-panel");
+  if (old) old.remove();
+
   const panel = document.createElement("div");
   panel.id = "jobmatch-panel";
   panel.style.position = "fixed";
   panel.style.bottom = "20px";
   panel.style.right = "20px";
-  panel.style.width = "320px";
-  panel.style.background = "#fff";
-  panel.style.padding = "16px";
-  panel.style.border = "1px solid #ddd";
+  panel.style.width = "360px";
+  panel.style.maxHeight = "60vh";
+  panel.style.overflowY = "auto";
+  panel.style.background = "white";
+  panel.style.border = "1px solid #e0e0e0";
   panel.style.borderRadius = "12px";
-  panel.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)";
-  panel.style.fontFamily = "sans-serif";
+  panel.style.boxShadow = "0 10px 24px rgba(0, 0, 0, 0.15)";
+  panel.style.padding = "20px";
+  panel.style.fontFamily = "Inter, sans-serif";
   panel.style.fontSize = "14px";
-  panel.style.lineHeight = "1.6";
-  panel.style.zIndex = "9999";
+  panel.style.zIndex = "999999";
+  panel.style.color = "#333";
 
   panel.innerHTML = `
-    <h3 style="margin-top: 0; font-size: 16px;">📊 JobMatch AI</h3>
-    <strong>Match Score:</strong> ${match_score}%<br>
-    <strong>Missing Skills:</strong><br>
-    <ul>${missing_skills.map(skill => `<li>${skill}</li>`).join("")}</ul>
-    <strong>Suggestion:</strong>
-    <p>${suggestions}</p>
-  `;
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+      <h3 style="margin:0; font-size:16px;">📊 <span style="color:#0047AB;">JobMatch AI</span></h3>
+      <button style="border:none; background:none; font-size:16px; cursor:pointer;" onclick="document.getElementById('jobmatch-panel').remove()">×</button>
+    </div>
+    
+    <div style="margin-bottom:8px;"><strong>Match Score:</strong> 
+      <span style="background:#e0f7fa; color:#00796b; padding:2px 8px; border-radius:8px;">
+        ${match_score}%
+      </span>
+    </div>
 
-  // Remove existing panel if it exists
-  const existing = document.getElementById("jobmatch-panel");
-  if (existing) existing.remove();
+    <div style="margin-bottom:8px;"><strong>Missing Skills:</strong>
+      <ul style="margin: 4px 0 8px 16px; padding: 0;">
+        ${missing_skills.map(skill => `<li style="margin-bottom:4px;">${skill}</li>`).join("")}
+      </ul>
+    </div>
+
+    <div style="margin-bottom:4px;"><strong>Suggestion:</strong></div>
+    <div style="background:#f9f9f9; padding:12px; border-radius:8px; border:1px solid #ddd;">
+      ${suggestions}
+    </div>
+  `;
 
   document.body.appendChild(panel);
 }
