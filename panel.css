@@ -1,0 +1,290 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap');
+
+/* ── Scoped reset ─────────────────────────────────────────────── */
+#jobmatch-panel,
+#jobmatch-panel * {
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Panel shell ──────────────────────────────────────────────── */
+#jobmatch-panel {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 340px;
+  max-height: 70vh;
+  background: #ffffff;
+  border: 1px solid #e8e4f0;
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(100, 88, 200, 0.13);
+  z-index: 999999;
+  color: #1a1825;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* smooth entrance */
+  animation: jm-slide-in 0.22s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+}
+
+@keyframes jm-slide-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Draggable header ─────────────────────────────────────────── */
+#jobmatch-panel .jm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px 12px;
+  border-bottom: 1px solid #e8e4f0;
+  background: #ffffff;
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+  border-radius: 16px 16px 0 0;
+}
+
+#jobmatch-panel .jm-header:active {
+  cursor: grabbing;
+}
+
+#jobmatch-panel .jm-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#jobmatch-panel .jm-logo-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  background: #f0eeff;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+#jobmatch-panel .jm-title {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #1a1825;
+  letter-spacing: -0.01em;
+}
+
+#jobmatch-panel .jm-title em {
+  font-style: italic !important;
+  font-family: 'DM Serif Display', Georgia, serif !important;
+  color: #7c6fe0;
+}
+
+#jobmatch-panel .jm-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid #e8e4f0;
+  border-radius: 6px;
+  background: transparent;
+  color: #8b87a0;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+
+#jobmatch-panel .jm-close:hover {
+  background: #fdf4f3;
+  border-color: #f0c0bb;
+  color: #c0392b;
+}
+
+/* ── Scrollable body ──────────────────────────────────────────── */
+#jobmatch-panel .jm-body {
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+#jobmatch-panel .jm-body::-webkit-scrollbar {
+  width: 4px;
+}
+#jobmatch-panel .jm-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+#jobmatch-panel .jm-body::-webkit-scrollbar-thumb {
+  background: #e0daf5;
+  border-radius: 99px;
+}
+#jobmatch-panel .jm-body::-webkit-scrollbar-thumb:hover {
+  background: #b5a8f5;
+}
+
+/* ── Section label ────────────────────────────────────────────── */
+#jobmatch-panel .jm-label {
+  font-size: 10.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #b8b4cc;
+  margin-bottom: 6px;
+}
+
+/* ── Score row ────────────────────────────────────────────────── */
+#jobmatch-panel .jm-score-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#jobmatch-panel .jm-score-number {
+  font-size: 28px;
+  font-weight: 300;
+  color: #1a1825;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+#jobmatch-panel .jm-score-bar-wrap {
+  flex: 1;
+  height: 5px;
+  background: #f0eeff;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+#jobmatch-panel .jm-score-bar {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #b5a8f5, #7c6fe0);
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Score colour variants */
+#jobmatch-panel .jm-score-bar.low    { background: linear-gradient(90deg, #f5a8a8, #e05050); }
+#jobmatch-panel .jm-score-bar.mid    { background: linear-gradient(90deg, #f5d4a8, #e09050); }
+#jobmatch-panel .jm-score-bar.good   { background: linear-gradient(90deg, #b5a8f5, #7c6fe0); }
+#jobmatch-panel .jm-score-bar.great  { background: linear-gradient(90deg, #a8f5c8, #4caf82); }
+
+/* ── Alignment summary ────────────────────────────────────────── */
+#jobmatch-panel .jm-summary {
+  font-size: 12.5px;
+  font-weight: 300;
+  color: #5a5570;
+  line-height: 1.65;
+  background: #f7f6f3;
+  border-radius: 10px;
+  padding: 11px 13px;
+  border-left: 3px solid #b5a8f5;
+}
+
+/* ── Missing skills ───────────────────────────────────────────── */
+#jobmatch-panel .jm-skills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+#jobmatch-panel .jm-skill-tag {
+  font-size: 11.5px;
+  font-weight: 400;
+  color: #7c6fe0;
+  background: #f0eeff;
+  border: 1px solid #ddd6ff;
+  padding: 4px 10px;
+  border-radius: 99px;
+  line-height: 1.4;
+}
+
+/* ── Suggested edits ──────────────────────────────────────────── */
+#jobmatch-panel .jm-edit-card {
+  background: #f7f6f3;
+  border: 1px solid #e8e4f0;
+  border-radius: 10px;
+  padding: 11px 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+#jobmatch-panel .jm-edit-section-label {
+  font-size: 10.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #b8b4cc;
+}
+
+#jobmatch-panel .jm-edit-from {
+  font-size: 12px;
+  color: #a05050;
+  background: #fdf4f3;
+  border-radius: 6px;
+  padding: 7px 9px;
+  line-height: 1.55;
+  text-decoration: line-through;
+  text-decoration-color: #e0a0a0;
+}
+
+#jobmatch-panel .jm-edit-to {
+  font-size: 12px;
+  color: #2e7d52;
+  background: #edfaf3;
+  border-radius: 6px;
+  padding: 7px 9px;
+  line-height: 1.55;
+}
+
+#jobmatch-panel .jm-edit-reason {
+  font-size: 11px;
+  color: #8b87a0;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* ── Divider ──────────────────────────────────────────────────── */
+#jobmatch-panel .jm-divider {
+  height: 1px;
+  background: #e8e4f0;
+  margin: 0;
+}
+
+/* ── Copy button ──────────────────────────────────────────────── */
+#jobmatch-panel .jm-copy-btn {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 500;
+  color: #7c6fe0;
+  background: #f0eeff;
+  border: 1px solid #ddd6ff;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+#jobmatch-panel .jm-copy-btn:hover {
+  background: #7c6fe0;
+  color: #fff;
+  border-color: #7c6fe0;
+}
+
+#jobmatch-panel .jm-copy-btn.copied {
+  background: #edfaf3;
+  color: #4caf82;
+  border-color: #a8f5c8;
+}
